@@ -17,10 +17,11 @@ require 'rubygems'
 require 'pkg-wizard/rpm'
 require 'fileutils'
 require 'logger'
+require 'rest-client'
 
 Log = Logger.new('build-master.log')
 $log = Log
-BUILD_BOT_URL = "http://el5-builder:4567"
+BUILD_BOT_HOST = "localhost"
 BASE_DIR = Dir.pwd
 PKG_SRC_DIR = File.join(BASE_DIR, 'packages')
 GEM_SRC_DIR = File.join(BASE_DIR, 'packages/sources')
@@ -33,6 +34,13 @@ SRC_RPMS_GIT_URLS = %w{
   git@github.com:frameos/rubygem-chef-rpm.git
   git@github.com:frameos/rubygem-chef-solr-rpm.git
   git@github.com:frameos/rubygem-chef-expander-rpm.git
+}
+
+MOCK_PROFILES = %w{
+  rbel5-x86_64
+  rbel5-i386
+  rbel6-x86_64
+  rbel6-i386
 }
 
 def debug(msg)
@@ -161,3 +169,23 @@ end
 Dir.chdir BASE_DIR
 
 info "SRPM packages available at #{ENV['HOME']}/rpmbuild/SRPMS"
+
+#
+# If --use-buildbot arg is used, use pkg-wizard's build-bot 
+# to build the binary packages
+#
+if ARGV.include?('--use-buildbot')
+  begin
+    info "Cleaning build-bot old jobs"
+    RestClient.post "http://#{BUILD_BOT_HOST}:4567/job/clean", {}
+    MOCK_PROFILES.each do |profile|
+      srpms_dir = "#{ENV['HOME']}/rpmbuild/SRPMS"
+      Dir["#{srpms_dir}/*.rpm"].each do |pkg|
+        info "Sending #{File.basename(pkg)} to build-bot"
+        debug `pkgwiz remote-build -b #{BUILD_BOT_HOST} -m #{profile} #{pkg} 2>&1`
+      end
+    end
+  rescue Exception => e
+    error "Could not send clean command to build-bot"
+  end
+end
