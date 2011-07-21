@@ -13,7 +13,7 @@ If you are trying to build in RHEL5/CentOS5/SL5, you must install newer versions
 First, we need to install some tools and build dependencies:
 
      yum install rubygems ruby-devel gcc gcc-c++ make which rpmdevtools git rpm-build mock
-     gem install pkg-wizard rest-client merb-core merb-slices merb-assets merb-helpers 
+     gem install pkg-wizard rake rest-client merb-core merb-slices merb-assets merb-helpers 
      gem merb-haml moneta bunny uuidtools rspec rake cucumber jeweler gemcutter
 
 # Check out the sources
