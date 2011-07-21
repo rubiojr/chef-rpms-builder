@@ -8,7 +8,7 @@ If you want to build binary packages also, you will need pkg-wizard's buildbot. 
 
 # Prepare the environment
 
-If your OS is RHEL5/CentOS5/SL5, I recommend you to install RBEL repo first. See http://rbel.frameos.org
+If you are trying to build in RHEL5/CentOS5/SL5, you must install newer versions of ruby (1.8.7) and rubygems (>= 1.3.2) first. Up to date packages are available at http://rbel.frameos.org
 
 First, we need to install some tools and build dependencies:
 
