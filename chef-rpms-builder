@@ -28,12 +28,12 @@ GEM_SRC_DIR = File.join(BASE_DIR, 'packages/sources')
 CHEF_SRC_DIR = File.join(BASE_DIR, 'chef') 
 CHEF_MODULES = %w{chef chef-server chef-server-api chef-server-webui chef-solr chef-expander}
 SRC_RPMS_GIT_URLS = %w{
-  git@github.com:frameos/rubygem-chef-server-rpm.git
-  git@github.com:frameos/rubygem-chef-server-webui-rpm.git
-  git@github.com:frameos/rubygem-chef-server-api-rpm.git
-  git@github.com:frameos/rubygem-chef-rpm.git
-  git@github.com:frameos/rubygem-chef-solr-rpm.git
-  git@github.com:frameos/rubygem-chef-expander-rpm.git
+  git://github.com/frameos/rubygem-chef-server-rpm.git
+  git://github.com/frameos/rubygem-chef-server-webui-rpm.git
+  git://github.com/frameos/rubygem-chef-server-api-rpm.git
+  git://github.com/frameos/rubygem-chef-rpm.git
+  git://github.com/frameos/rubygem-chef-solr-rpm.git
+  git://github.com/frameos/rubygem-chef-expander-rpm.git
 }
 
 MOCK_PROFILES = %w{
