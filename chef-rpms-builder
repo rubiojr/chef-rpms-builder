@@ -61,10 +61,13 @@ if `which git`.strip.chomp.empty?
 end
 
 if not File.directory? File.join(CHEF_SRC_DIR, ".git")
-  msg = "Chef source directory not found. Do you want to check it out? "
+  msg = "\nChef source directory not found."
   puts msg
+  msg = "Do you want to fetch sources? (y/n): "
+  print msg
   if $stdin.gets =~ /^(y|Y)/
-    debug `git clone https://github.com/opscode/chef.git 2>1`
+    info "Fetching Chef sources from https://github.com/opscode/chef.git"
+    debug `git clone https://github.com/opscode/chef.git 2>&1`
   else
     error "Chef source dir not found."
     exit 1
@@ -91,7 +94,7 @@ packages.each do |p|
   begin
     info "Building #{p} gem..."
     Dir.chdir p
-    debug `rake package 2>1`
+    debug `rake package 2>&1`
     gem = Dir["pkg/*.gem"].first
     FileUtils.cp gem, GEM_SRC_DIR
   rescue Exception => e
@@ -118,7 +121,7 @@ packages.each do |p|
     Dir.chdir PKG_SRC_DIR
     url = SRC_RPMS_GIT_URLS.find { |u| u =~ /rubygem-#{p}-rpm/ }
     info "Fetching #{p} RPM sources"
-    debug `git clone #{url} 2>1`
+    debug `git clone #{url} 2>&1`
     Dir.chdir BASE_DIR
   end
 end
@@ -135,8 +138,8 @@ end
 # 
 # Build SRPM
 #
-debug `rpmdev-setuptree 2>1`
-debug `rpmdev-wipetree 2>1`
+debug `rpmdev-setuptree 2>&1`
+debug `rpmdev-wipetree 2>&1`
 Dir["#{PKG_SRC_DIR}/*"].each do |d|
   next if d =~ /sources/ or not File.directory?(d)
   Dir.chdir d
