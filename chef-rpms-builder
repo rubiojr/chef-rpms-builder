@@ -75,7 +75,7 @@ if `which rpmdev-setuptree`.strip.chomp.empty?
 end
 
 info "----------------------------------------------------"
-info "#{Time.now.to_s} BUILDING CHEF MASTER"
+info " BUILDING CHEF MASTER #{Time.now.to_s}              "
 info "----------------------------------------------------"
 
 if not File.directory? File.join(CHEF_SRC_DIR, ".git")
