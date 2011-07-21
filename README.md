@@ -2,7 +2,7 @@
 
 This script fetches chef package sources from http://github.com/frameos RPM repositories and creates SRPMS from Opscode's Chef master branch.
 
-Either Fedora or RHEL/CentOS/SL is required to use this script
+Either Fedora or RHEL/CentOS/SL (x86_64) is required to use this script.
 
 If you want to build binary packages also, you will need pkg-wizard's buildbot. See Usage section for more details.
 
