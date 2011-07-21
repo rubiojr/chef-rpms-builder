@@ -20,7 +20,7 @@ First, we need to install some tools and build dependencies:
 
 Check out the build script sources:
 
-    git clone git@github.com:rubiojr/chef-rpms-builder.git
+    git clone git://github.com/rubiojr/chef-rpms-builder.git
 
 # Usage
     
