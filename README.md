@@ -8,9 +8,11 @@ If you want to build binary packages also, you will need pkg-wizard's buildbot. 
 
 # Prepare the environment
 
+If your OS is RHEL5/CentOS5/SL5, I recommend you to install RBEL repo first. See http://rbel.frameos.org
+
 First, we need to install some tools and build dependencies:
 
-     yum install ruby-devel gcc gcc-c++ make which rpmdevtools git rpm-build mock
+     yum install rubygems ruby-devel gcc gcc-c++ make which rpmdevtools git rpm-build mock
      gem install pkg-wizard rest-client merb-core merb-slices merb-assets merb-helpers 
      gem merb-haml moneta bunny uuidtools rspec rake cucumber jeweler gemcutter
 
