@@ -48,17 +48,27 @@ def error(msg)
   $log.error msg
 end
 
-info "-----------------------------------------------"
-info "#{Time.now.to_s} BUILDING CHEF MASTER"
-info "-----------------------------------------------"
-
 #
 # Check if git command is available
 #
 if `which git`.strip.chomp.empty?
-  error "git command not found. Aborting"
+  error "git command not found."
+  error "run 'yum install git' to install"
   exit 1
 end
+
+#
+# Chef if rpmdevtools present
+#
+if `which rpmdev-setuptree`.strip.chomp.empty?
+  error "rpmdevtools not found not found."
+  error "run 'yum install rpmdevtools' to install"
+  exit 1
+end
+
+info "----------------------------------------------------"
+info "#{Time.now.to_s} BUILDING CHEF MASTER"
+info "----------------------------------------------------"
 
 if not File.directory? File.join(CHEF_SRC_DIR, ".git")
   msg = "\nChef source directory not found."
