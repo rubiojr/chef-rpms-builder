@@ -174,18 +174,30 @@ info "SRPM packages available at #{ENV['HOME']}/rpmbuild/SRPMS"
 # If --use-buildbot arg is used, use pkg-wizard's build-bot 
 # to build the binary packages
 #
+if not ARGV.include?('--rhel5')
+  MOCK_PROFILES.delete 'rbel5-i386'
+  MOCK_PROFILES.delete 'rbel5-x86_64'
+end
+if not ARGV.include?('--rhel6')
+  MOCK_PROFILES.delete 'rbel6-i386'
+  MOCK_PROFILES.delete 'rbel6-x86_64'
+end
 if ARGV.include?('--use-buildbot')
-  begin
-    info "Cleaning build-bot old jobs"
-    RestClient.post "http://#{BUILD_BOT_HOST}:4567/job/clean", {}
-    MOCK_PROFILES.each do |profile|
-      srpms_dir = "#{ENV['HOME']}/rpmbuild/SRPMS"
-      Dir["#{srpms_dir}/*.rpm"].each do |pkg|
-        info "Sending #{File.basename(pkg)} to build-bot"
-        debug `pkgwiz remote-build -b #{BUILD_BOT_HOST} -m #{profile} #{pkg} 2>&1`
+  if MOCK_PROFILES.empty?
+    info "Mock profiles not selected. Use either --rhel6 or --rhel5 arguments (or both)"
+  else
+    begin
+      info "Cleaning build-bot old jobs"
+      RestClient.post "http://#{BUILD_BOT_HOST}:4567/job/clean", {}
+      MOCK_PROFILES.each do |profile|
+        srpms_dir = "#{ENV['HOME']}/rpmbuild/SRPMS"
+        Dir["#{srpms_dir}/*.rpm"].each do |pkg|
+          info "Sending #{File.basename(pkg)} to build-bot (mock profile #{profile})"
+          debug `pkgwiz remote-build -b #{BUILD_BOT_HOST} -m #{profile} #{pkg} 2>&1`
+        end
       end
+    rescue Exception => e
+      error "Could not send clean command to build-bot"
     end
-  rescue Exception => e
-    error "Could not send clean command to build-bot"
   end
 end

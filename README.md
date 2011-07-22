@@ -37,6 +37,8 @@ Use "--quiet" if you don't want to see debug output
 If you want to use pkg-wizard's buildbot (see http://pkg-wizard.frameos.org)
 to create binary RPMS:
 
-    ruby chef-rpms-builder --quiet --use-buildbot
+    ruby chef-rpms-builder --quiet --use-buildbot --rhel5
+
+This will build packages using a build-bot in localhost using rbel5 mock profiles.
 
 
