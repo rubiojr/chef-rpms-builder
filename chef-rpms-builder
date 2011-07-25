@@ -133,7 +133,8 @@ packages.each do |p|
     # package sources already checked out, clean them
     info "Cleaning #{p} RPM sources"
     Dir.chdir src
-    `git reset --hard`
+    debug `git reset --hard`
+    debug `git pull origin master`
     Dir.chdir BASE_DIR
   else
     Dir.chdir PKG_SRC_DIR
