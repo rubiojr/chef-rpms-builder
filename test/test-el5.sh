@@ -1,10 +1,11 @@
 #!/bin/sh
 
 HOME=/root
+LOGFILE=/vagrant/shellout.log
 
 run(){
 	echo -n "Running '$@' ... "
-	$@ > /tmp/shellout.log 2>&1
+	$@ > $LOGFILE 2>&1
 	if [ $? != 0 ]; then
 		echo 'Failed'
 		exit 1
