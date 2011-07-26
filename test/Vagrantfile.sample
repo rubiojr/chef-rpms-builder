@@ -1,0 +1,6 @@
+Vagrant::Config.run do |config|
+  config.vm.box = "sl6-64-nochef"
+  config.vm.forward_port "chef", 4040, 4040
+  config.vm.forward_port "chef-api", 4000, 4000
+  config.vm.provision :shell, :path => 'test-el6.sh'
+end

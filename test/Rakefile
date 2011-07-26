@@ -1,0 +1,18 @@
+require 'rubygems'
+require 'pony'
+require 'vagrant'
+
+task :default => :up
+
+task :up do
+  begin
+    out = `vagrant up`
+    Pony.mail(:to => 'myalert@mail.com', 
+              :from => 'rpm-sl6-test@chef-ci.local', 
+              :subject => "[CHEF-CI-RPMS] Test result #{$? == 0 ? 'OK':'FAILED'}", 
+	            :body => File.read('shellout.log'))
+  ensure
+    out = `vagrant destroy`
+  end
+end
+
