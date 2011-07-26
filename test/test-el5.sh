@@ -34,5 +34,5 @@ run tar xzf yum.tgz
 run tar xzf yumrepo.tgz
 run knife cookbook -c /root/.chef/knife.rb upload -o . yum yumrepo
 run knife node -c /root/.chef/knife.rb run_list add vagrant 'recipe[yumrepo]'
-run rpm --force -Uvh http://rbel.co/epel6
+run rpm --force -Uvh http://rbel.co/epel5
 run chef-client -c /root/.chef/knife.rb
