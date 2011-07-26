@@ -10,7 +10,7 @@ The scripts in directory are intended to be run in a clean RHEL5/RHEL6 box (Eith
       config.vm.provision :shell, :path => 'test-el6.sh'
     end
 
-This Vagrant config starts a RHEL6 VM maps Chef Server ports and run the test-el6.sh script inside the VM.
+This Vagrant config starts a RHEL6 VM maps Chef Server ports and run the test-el6.sh script inside the VM. If test-el6.sh fails, you can pipe the error to an email and have something like a CI server.
 
 # Available tests
 
