@@ -1,11 +1,13 @@
 require 'rubygems'
 require 'pony'
 require 'vagrant'
+require 'fileutils'
 
 task :default => :up
 
 task :up do
   begin
+    FileUtils.rm 'shellout.log' if File.exist?('shellout.log')
     out = `vagrant up`
     Pony.mail(:to => 'myalert@mail.com', 
               :from => 'rpm-sl6-test@chef-ci.local', 
