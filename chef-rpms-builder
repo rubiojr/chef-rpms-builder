@@ -112,6 +112,7 @@ packages.each do |p|
   begin
     info "Building #{p} gem..."
     Dir.chdir p
+    FileUtils.rm_rf 'pkg' if File.exist?('pkg')
     debug `rake package 2>&1`
     gem = Dir["pkg/*.gem"].first
     FileUtils.cp gem, GEM_SRC_DIR
@@ -129,10 +130,10 @@ Dir.chdir BASE_DIR
 # 
 packages.each do |p|
   src = File.join(PKG_SRC_DIR, "#{p}")
-  if File.exist?("rubygem-#{p}-rpm/.git")
+  if File.exist?("#{PKG_SRC_DIR}/rubygem-#{p}-rpm/.git")
     # package sources already checked out, clean them
     info "Cleaning #{p} RPM sources"
-    Dir.chdir src
+    Dir.chdir "#{PKG_SRC_DIR}/rubygem-#{p}-rpm"
     debug `git reset --hard`
     debug `git pull origin master`
     Dir.chdir BASE_DIR
