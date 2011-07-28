@@ -8,10 +8,13 @@ task :default => :up
 task :up do
   begin
     FileUtils.rm 'shellout.log' if File.exist?('shellout.log')
+    puts 'Running vagrant up...'
     out = `vagrant up`
+    status = $? == 0 ? 'OK':'FAILED'
+    puts "Test #{status}, mailing result..."
     Pony.mail(:to => 'myalert@mail.com', 
               :from => 'rpm-sl6-test@chef-ci.local', 
-              :subject => "[CHEF-CI-RPMS] Test result #{$? == 0 ? 'OK':'FAILED'}", 
+              :subject => "[CHEF-CI-RPMS] Test result #{status}", 
 	            :body => File.read('shellout.log'))
   ensure
     out = `vagrant destroy`
